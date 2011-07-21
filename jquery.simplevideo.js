@@ -41,7 +41,7 @@ $.fn.extend({
 				$src.attr('type', 'video/mp4');
 				compat = true;
 			} else if (vidElement.canPlayType('video/ogg')){
-				$src.attr('src', settings.ogg);
+				$src.attr('src', settings.ogv);
 				$src.attr('type', 'video/ogg');
 				compat = true;
 			} else if (vidElement.canPlayType('video/webm')){
