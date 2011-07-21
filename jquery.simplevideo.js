@@ -10,14 +10,36 @@ $.fn.extend({
 			mp4:'',
 			ogv:'',
 			webm:'',
-			swf:''
+			swf:'',
 			poster:''
 		}	
 		var settings = $.extend({}, defaults, o);
 		var $this = $(this);
 		var vidElement = document.createElement('video');
+
+		var fallback = function(){
+			var $obj = $('<object/>');
+			$obj.attr('classid', 'clsid:d27cdb6e-ae6d-11cf-96b8-444553540000');
+			$obj.attr('codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0');
+			$obj.attr('width', settings.width);
+			$obj.attr('height', settings.height);
+			$obj.append('<param name="allowfullscreen" value="true" />');
+			$obj.append('<param name="movie" value="' + settings.swf + '" />');
+			var $embed = $('<embed/>');
+			$embed.attr('width', settings.width);
+			$embed.attr('height', settings.height);
+			$embed.attr('allowfullscreen', 'true');
+			$embed.attr('allowscriptaccess', 'always');
+			$embed.attr('quality', 'high');
+			$embed.attr('src', settings.swf);
+			$embed.attr('type', 'application/x-shockwave-flash');
+			$obj.append($embed);
+			$this.append($obj);
+		}
+
 		if (typeof(vidElement.canPlayType) == 'undefinded'){
 			//Fallback to swf
+			fallback();
 		} else {
 			var $video = $(vidElement);
 			$video.attr('width', settings.width);
@@ -54,6 +76,7 @@ $.fn.extend({
 				$this.append($video);
 			} else {
 				//Fallback to flash
+				fallback();
 			}
 		}
 	}
