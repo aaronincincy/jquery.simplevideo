@@ -12,9 +12,17 @@ $.fn.extend({
 			webm:'',
 			swf:'',
 			poster:''
-		}	
-		var settings = $.extend({}, defaults, o);
+		}
+			
 		var $this = $(this);
+
+		defaults.mp4 = $this.attr('data-mp4');
+		defaults.ogv = $this.attr('data-ogv');
+		defaults.webm = $this.attr('data-webm');
+		defaults.swf = $this.attr('data-swf');
+		defaults.poster = $this.attr('data-poster');
+
+		var settings = $.extend({}, defaults, o);
 		var vidElement = document.createElement('video');
 
 		var fallback = function(){
@@ -58,15 +66,15 @@ $.fn.extend({
 			}
 			var src = $('<source />');
 			var compat = false;
-			if (vidElement.canPlayType('video/mp4')){
+			if (vidElement.canPlayType('video/mp4') && settings.mp4){
 				$src.attr('src', settings.mp4);
 				$src.attr('type', 'video/mp4');
 				compat = true;
-			} else if (vidElement.canPlayType('video/ogg')){
+			} else if (vidElement.canPlayType('video/ogg') && settings.ogv){
 				$src.attr('src', settings.ogv);
 				$src.attr('type', 'video/ogg');
 				compat = true;
-			} else if (vidElement.canPlayType('video/webm')){
+			} else if (vidElement.canPlayType('video/webm') && settings.webm){
 				$src.attr('src', settings.webm);
 				$src.attr('type', 'video/webm');
 				compat = true;
