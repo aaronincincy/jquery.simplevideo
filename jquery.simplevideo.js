@@ -66,17 +66,17 @@ $.fn.extend({
 			}
 			var src = $('<source />');
 			var compat = false;
-			if (vidElement.canPlayType('video/mp4') && settings.mp4){
+			if (vidElement.canPlayType('video/webm') && settings.webm){
+				$src.attr('src', settings.webm);
+				$src.attr('type', 'video/webm');
+				compat = true;
+			} else if (vidElement.canPlayType('video/mp4') && settings.mp4){
 				$src.attr('src', settings.mp4);
 				$src.attr('type', 'video/mp4');
 				compat = true;
 			} else if (vidElement.canPlayType('video/ogg') && settings.ogv){
 				$src.attr('src', settings.ogv);
 				$src.attr('type', 'video/ogg');
-				compat = true;
-			} else if (vidElement.canPlayType('video/webm') && settings.webm){
-				$src.attr('src', settings.webm);
-				$src.attr('type', 'video/webm');
 				compat = true;
 			}
 			if (compat){
